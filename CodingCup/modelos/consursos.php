@@ -1,10 +1,10 @@
 <?php
     class concurso {
-        public $id;
-        public $nombre;
+        public $id=0;
+        public $nombre="";
         public $fechaInicio;
         public $fechaFin; 
-        public $estado;
+        public $estado="";
 
         public function __construct(){
             $this->fechaInicio=new DateTime();

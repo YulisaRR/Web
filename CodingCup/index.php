@@ -4,14 +4,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Codig cup</title>
-    <link rel="stylesheet" href="CSS/bootstrap.min.css">
-    <link rel="stylesheet" href="CSS/estiloIndex.css">
-    <script src="JavaScrip/bootstrap.bundle.min.js"></script>
+    <title>Coding cup</title>
+    <link rel="stylesheet" href="Vista/CSS/bootstrap.min.css">
+    <link rel="stylesheet" href="Vista/CSS/EstilosIndex.css">
+    <script src="Vista/JS/bootstrap.bundle.min.js"></script>
 
 </head>
 
 <body>
+  <?php
+      session_start();
+    if(isset($_SESSION["tipo"])==true){
+        $displayStyle = 'block';
+        $ocultar = 'none';
+     
+    }else{
+        $displayStyle = 'none';
+        $ocultar = 'block';
+    }
+    
+   
+  ?>
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
         <div class="container-fluid">
             <!-- <a class="navbar-brand" href="#">Navbar</a>-->
@@ -23,11 +36,13 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                  
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="IniciarSesion.php">Iniciar Sesión</a>
+                        <a class="nav-link active" aria-current="page" style="display: <?php echo $ocultar;?>" href="login.php">Iniciar Sesión</a>
+                        <a class="nav-link active" aria-current="page" style="display: <?php echo $displayStyle;?>"  href="CerrarSesion.php">Cerrar Sesión</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link"  href="Registrar.php">Registrarte</a>
+                        <a class="nav-link"  href="registrar.php">Registrarte</a>
                     </li>
 
                     <li class="nav-item">

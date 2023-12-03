@@ -5,23 +5,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registrar coach</title>
-    <link rel="stylesheet" href="CSS/bootstrap.min.css">
-    <link rel="stylesheet" href="CSS/estilosRegistrar.css">
-    <script src="JavaScript/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="Vista/CSS/bootstrap.min.css">
+    <link rel="stylesheet" href="Vista/CSS/EstiloRegistrar.css">
+    <script src="Vista/JS/bootstrap.bundle.min.js"></script>
 
+    
 </head>
 
 <body>
     <?php
-    require_once('bdXam/RegistroCoachUtil.php');
+   // require_once('bdXam/RegistroCoachUtil.php');
     ?>
 
     <div class="container">
-        <form method="post" class="row mx-auto g-3" style="width: 40%;">
-            <h3>Registro Coach</h3>
+    <form method="post" class="row mx-auto g-3" style="width: 40%;" onsubmit="return validarFormulario()">
+            <h3>Registro</h3>
             <?php
             if ($comprobarDatos) {
-                echo "<script>window.location='RegistroExitoso.php'</script>";
+                echo "<script>window.location='registroExitoso.php'</script>";
                 $comprobarDatos = false;
             }
             ?>
@@ -93,70 +94,30 @@
                     </ul>
                 </div>
             </div>
-            <!--TIPO DE INSTITUCION-->
+            
+            <!--¿Qué tipo de usuaio es?--> 
 
-            <div class="">
-                <label for="institucion" class="form-label">Institución:</label>
-                <input type="text" id="txtInstitucion" name="institucion" class="form-control <?= $valInstitucion ?>
-                        " placeholder="institucion" required value="<?php echo isset($_POST["institucion"]) ? $_POST["institucion"] : "" ?>">
-                <div class="invalid-feedback">
-                    <ul>
-                        <li>La institucion es obligatorio</li>   
-                    </ul>
-                </div>
-
-            </div>
-
-
-            <!---
-            <div class="">
-                <label for="institucion" class="form-label">Institución:</label>
-                <select class="form-select <?= $valInstitucion ?>" id="institucionSelec" name="institucion">
-                    <option value="Instituto Tecnológico de Acapulco" <?php echo (isset($_POST["institucion"])
-                                                                            && $_POST["institucion"] == "Instituto Tecnológico de Acapulco")
-                                                                            ? "selected" : ""; ?>>Instituto Tecnológico de Acapulco</option>
-                    <option value="Instituto Tecnológico de Torreó" <?php echo (isset($_POST["institucion"])
-                                                                        && $_POST["institucion"] == "Instituto Tecnológico de Torreón")
-                                                                        ? "selected" : ""; ?>>Instituto Tecnológico de Torreón</option>
-                    <option value="Instituto Tecnológico Superior del Sur de Guanajuato" <?php echo (isset($_POST["institucion"])
-                                                                                                && $_POST["institucion"] == "Instituto Tecnológico Superior del Sur de Guanajuato")
-                                                                                                ? "selected" : ""; ?>>Instituto Tecnológico Superior del Sur de Guanajuato</option>
-                    <option value="Instituto Tecnológico de Agua Prieta" <?php echo (isset($_POST["institucion"])
-                                                                                && $_POST["institucion"] == "Instituto Tecnológico de Agua Prieta")
-                                                                                ? "selected" : ""; ?>>Instituto Tecnológico de Agua Prieta</option>
-                    <option value="Instituto Tecnológico de Zitácuaro" <?php echo (isset($_POST["institucion"])
-                                                                            && $_POST["institucion"] == "Instituto Tecnológico de Zitácuaro")
-                                                                            ? "selected" : ""; ?>>Instituto Tecnológico de Zitácuaro</option>
-                </select>
-                <div class="invalid-feedback">
-                    <ul>
-                        <li>Selecciona una institución es obligarorio</li>
-                    </ul>
-                </div>
-            </div>
-        -->
-            <!--¿Es administrador?-->
-            <!--
             <div class="">
                 <label for="tipoUsuario" class="form-label">Tipo de usuario:</label>
-                <select class="form-select <?= $valInstitucion ?>" id="usuario" name="usuario">
-                    <option value="coach" <?php echo (isset($_POST["usuario"])
-                                                && $_POST["usuario"] == "coach")
-                                                ? "selected" : ""; ?>>Coach</option>
-                    <option value="Administrador" <?php echo (isset($_POST["usuario"])
-                                                        && $_POST["usuario"] == "Administrador")
-                                                        ? "selected" : ""; ?>>Administrador</option>
-                    <option value="auxiliar" <?php echo (isset($_POST["usuario"])
-                                                    && $_POST["usuario"] == "Auxiliar")
-                                                    ? "selected" : ""; ?>>Auxiliar</option>
+                <select class="form-select <?= $valInstitucion ?>" id="usuario" name="usuario" onchange="mostrarInstitucion()">
+                    <option value="coach" <?php echo (isset($_POST["usuario"]) && $_POST["usuario"] == "coach") ? "selected" : ""; ?>>Coach</option>
+                    <option value="Administrador" <?php echo (isset($_POST["usuario"]) && $_POST["usuario"] == "Administrador") ? "selected" : ""; ?>>Administrador</option>
+                    <option value="auxiliar" <?php echo (isset($_POST["usuario"]) && $_POST["usuario"] == "Auxiliar") ? "selected" : ""; ?>>Auxiliar</option>
                 </select>
                 <div class="invalid-feedback">
                     <ul>
-                        <li>Es obligarorio seleccionar un tipo de usuario</li>
+                        <li>Es obligatorio seleccionar un tipo de usuario</li>
                     </ul>
                 </div>
             </div>
-            -->
+
+            <!-- Tipo de institucion -->
+
+            <div class="" id="divInstitucion">
+                <label for="institucion" class="form-label">Institución:</label>
+                <input type="text" id="txtInstitucion" name="institucion" class="form-control <?= $valInstitucion ?>" placeholder="Institucion" value="<?php echo isset($_POST["institucion"]) ? $_POST["institucion"] : "" ?>">
+            </div>
+            
             <div class="d-flex justify-content-between p-4">
                 <button class="btn btn-primary" type="submit">Registrar</button>
 
@@ -164,7 +125,29 @@
             </div>
         </form>
     </div>
+<script>
+        function mostrarInstitucion() {
+            var tipoUsuario = document.getElementById('usuario').value;
+            var divInstitucion = document.getElementById('divInstitucion');
 
+            if (tipoUsuario.toLowerCase() === 'coach') {
+                divInstitucion.style.display = 'block';
+            } else {
+                divInstitucion.style.display = 'none';
+            }
+        }
+
+        function validarFormulario() {
+            var tipoUsuario = document.getElementById('usuario').value;
+
+            if (tipoUsuario.toLowerCase() === 'coach' && document.getElementById('txtInstitucion').value.trim() === '') {
+                alert('La institución es obligatoria para el "Coach"');
+                return false;
+            }
+
+            return true;
+        }
+    </script>
 </body>
 
 </html>

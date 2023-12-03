@@ -109,10 +109,6 @@
 
 
 
-
-
-
-
     <script src="JavaScript/bootstrap.bundle.min.js"></script>
     <script src="dt/jQuery-3.7.0/jquery-3.7.0.min.js"></script>
     <script src="dt/DataTables-1.13.6/js/jquery.dataTables.min.js"></script>

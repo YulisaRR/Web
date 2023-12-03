@@ -1,11 +1,10 @@
 <?php
-    class Usuario {
-        public $id;
-        public $nombreCompleto;
-        public $correo;
-        public $contrasena; 
-        public $institucion;
-        public $usuario;
+    class Usuario{
+        public $id=0;
+        public $nombre="";
+        public $correo="";
+        public $password="";
+        public $institucion="";
+        public $tipo="";
     }
-    
 ?>
